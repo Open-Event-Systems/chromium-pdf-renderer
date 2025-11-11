@@ -3,8 +3,9 @@ package pdfrenderer_test
 import (
 	"os"
 	"path/filepath"
-	"pdfrenderer"
 	"testing"
+
+	pdfrenderer "github.com/Open-Event-Systems/chromium-pdf-renderer"
 )
 
 func TestFind(t *testing.T) {

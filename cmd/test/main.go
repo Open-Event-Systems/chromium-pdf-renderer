@@ -5,7 +5,8 @@ import (
 	"io"
 	"log"
 	"os"
-	"pdfrenderer"
+
+	pdfrenderer "github.com/Open-Event-Systems/chromium-pdf-renderer"
 )
 
 func main() {
