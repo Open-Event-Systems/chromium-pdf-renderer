@@ -1,6 +1,11 @@
 package pdfrenderer
 
-import "os/exec"
+import (
+	"os"
+	"os/exec"
+	"path/filepath"
+	"runtime"
+)
 
 var execNames = []string{
 	"chromium-browser",
@@ -19,6 +24,15 @@ func FindChromium() string {
 		}
 	}
 
+	if runtime.GOOS == "windows" {
+		for _, path := range getWindowsPaths() {
+			_, err := os.Stat(path)
+			if err == nil {
+				return path
+			}
+		}
+	}
+
 	return ""
 }
 
@@ -28,4 +42,14 @@ func findExec(name string) string {
 		return ""
 	}
 	return path
+}
+
+func getWindowsPaths() []string {
+	var paths []string
+
+	paths = append(paths, filepath.Join(os.Getenv("ProgramFiles"), "Google", "Chrome", "Application", "chrome.exe"))
+	paths = append(paths, filepath.Join(os.Getenv("ProgramFiles(x86)"), "Google", "Chrome", "Application", "chrome.exe"))
+	paths = append(paths, filepath.Join(os.Getenv("LocalAppData"), "Google", "Chrome", "Application", "chrome.exe"))
+
+	return paths
 }
